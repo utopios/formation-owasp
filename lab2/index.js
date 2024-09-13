@@ -23,6 +23,10 @@ app.post('/report-violation', express.json(), (req, res) => {
     res.status(204).end();
 });
 
+app.get('/cookie', (req, res) => {
+    console.log(req)
+})
+
 // Servir un fichier HTML statique
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
