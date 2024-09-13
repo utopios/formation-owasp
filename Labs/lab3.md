@@ -17,7 +17,7 @@
 ```dockerfile
 FROM nginx:alpine
 
-# Installer ModSecurity et ses dépendances
+# Installer les dépendances nécessaires
 RUN apk add --no-cache \
     git \
     gcc \
@@ -30,7 +30,8 @@ RUN apk add --no-cache \
     libtool \
     make \
     apache2-dev \
-    libmaxminddb-dev
+    libmaxminddb-dev \
+    linux-headers  # Ajoute les en-têtes Linux
 
 # Télécharger et compiler ModSecurity
 RUN git clone --depth 1 https://github.com/SpiderLabs/ModSecurity /opt/ModSecurity && \
@@ -45,7 +46,7 @@ RUN git clone --depth 1 https://github.com/SpiderLabs/ModSecurity /opt/ModSecuri
 # Télécharger et configurer ModSecurity pour NGINX
 RUN git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git /opt/ModSecurity-nginx
 
-# Configurer NGINX avec ModSecurity
+# Télécharger et configurer OWASP CRS
 RUN git clone https://github.com/SpiderLabs/owasp-modsecurity-crs /etc/nginx/modsec/owasp-modsecurity-crs && \
     cp /etc/nginx/modsec/owasp-modsecurity-crs/crs-setup.conf.example /etc/nginx/modsec/owasp-modsecurity-crs/crs-setup.conf && \
     echo "Include /etc/nginx/modsec/owasp-modsecurity-crs/crs-setup.conf" >> /etc/nginx/modsec/main.conf && \
