@@ -43,7 +43,8 @@ exports.login = async (req, res) => {
 
 exports.profile = async (req, res) => {
   try {
-    const userId = req.auth.userId;
+   
+    const userId = req.query.userId;
     const user = await User.findById(userId);
 
     if (!user) {
